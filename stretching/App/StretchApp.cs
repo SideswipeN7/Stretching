@@ -5,6 +5,7 @@ using Stretching.Reader;
 using System;
 using static Stretching.App.Notifications.Notifier.MESSAGES;
 using static Stretching.App.Notifications.Notifier.TITLES;
+using static Stretching.Logger.Logger;
 using static System.Windows.MessageBoxButton;
 using static System.Windows.MessageBoxImage;
 
@@ -18,6 +19,7 @@ namespace Stretching.App
         private Notifier notifier_;
         private MainWindow window_;
         private StretchData data_;
+        private Logger.Logger logger_;
 
         /******************************************************************************************/
         /******************************        Constructor       **********************************/
@@ -39,6 +41,10 @@ namespace Stretching.App
             reader_ = new FileReader() { extensionFilter = EXTENSIONS_FILTER };
             parser_ = new TraParser();
             notifier_ = new Notifier();
+            logger_ = new Logger.Logger();
+            //Allow debug
+            logger_.IsDebug = true;
+            logger_.Log("APP Started");
         }
 
 
@@ -59,10 +65,12 @@ namespace Stretching.App
                     data_ = parser_.Parse(fileData);
                     OnDataLoad();
                 }
-                catch (TraParseException)
+                catch (TraParseException ex)
                 {
                     //Show user that data in file are in correct
                     notifier_.Notify(WRONG_DATA, FILE_ERROR, OK, Error);
+                    //Log
+                    logger_.Log(ex.ToString(), LOG_TYPE.ERROR);
                 }
             }
             else

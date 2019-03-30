@@ -5,6 +5,7 @@ namespace Stretching.App.Data
     class StretchData
     {
 
+        public string Path { get; set; }
         public double PreLoadValue { get; set; }
         public string PreLoadUnit { get; set; }
         public double TestSpeedValue { get; set; }
