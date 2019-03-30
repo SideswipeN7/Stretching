@@ -55,12 +55,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="App\Solving\Solver.cs" />
     <Compile Include="App\StretchApp.cs" />
     <Compile Include="App\Data\LineData.cs" />
     <Compile Include="App\Data\StretchData.cs" />
     <Compile Include="App\Notifications\Notifier.cs" />
     <Compile Include="App\Parser\TraParseException.cs" />
     <Compile Include="App\Parser\TraParser.cs" />
+    <Compile Include="Logger\Logger.cs" />
     <Compile Include="Reader\FileReader.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
