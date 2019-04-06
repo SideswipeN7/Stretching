@@ -22,6 +22,7 @@ namespace Stretching.Reader
         /**
          * Methods that read file content
          * @returns string[]
+         * @throws ArgumentException
          */
         public string[] ReadFile()
         {
@@ -29,9 +30,11 @@ namespace Stretching.Reader
 
             openFileDialog_.Multiselect = false;
             openFileDialog_.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            bool? fileSelected = false;
             try
             {
-                if (openFileDialog_.ShowDialog() == true)
+                fileSelected = openFileDialog_.ShowDialog();
+                if (fileSelected == true)
                 {
                     output = File.ReadAllText(openFileDialog_.FileName).Split('\n');
                 }
@@ -41,6 +44,11 @@ namespace Stretching.Reader
             {
                 Console.Error.WriteLine($"Error in {nameof(FileReader)} method: {nameof(ReadFile)}" +
                     $"Error Type: {ex.GetType()}, Error message: {ex.Message}");
+            }
+
+            if(fileSelected == false)
+            {
+                throw new ArgumentException("File not Selected");
             }
 
             return output;

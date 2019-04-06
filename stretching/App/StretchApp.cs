@@ -28,7 +28,7 @@ namespace Stretching.App
         /**
         * Public constructor
         */
-        public StretchApp(MainWindow window) : base()
+        public StretchApp(MainWindow window) : this()
         {
             window_ = window;
         }
@@ -57,26 +57,35 @@ namespace Stretching.App
          */
         public void ReadFile()
         {
-            var fileData = reader_.ReadFile();
-            if (fileData != null)
+            try
             {
-                try
+                var fileData = reader_.ReadFile();
+                if (fileData != null)
                 {
-                    data_ = parser_.Parse(fileData);
-                    OnDataLoad();
+                    try
+                    {
+                        data_ = parser_.Parse(fileData);
+                        OnDataLoad();
+                    }
+                    catch (TraParseException ex)
+                    {
+                        //Show user that data in file are in correct
+                        notifier_.Notify(WRONG_DATA, FILE_ERROR, OK, Error);
+                        //Log
+                        logger_.Log(ex.ToString(), LOG_TYPE.ERROR);
+                    }
                 }
-                catch (TraParseException ex)
+                else
                 {
-                    //Show user that data in file are in correct
-                    notifier_.Notify(WRONG_DATA, FILE_ERROR, OK, Error);
+                    //Show user that data there are no Data
+                    notifier_.Notify(NO_DATA_IN_FILE, FILE_ERROR, OK, Warning);
                     //Log
-                    logger_.Log(ex.ToString(), LOG_TYPE.ERROR);
+                    logger_.Log("File with no data", LOG_TYPE.ERROR);
                 }
             }
-            else
+            catch (ArgumentException)//log file not selected
             {
-                //Show user that data there are no Data
-                notifier_.Notify(NO_DATA_IN_FILE, FILE_ERROR, OK, Warning);
+                logger_.Log("File not selected", LOG_TYPE.WARNING);
             }
         }
 
