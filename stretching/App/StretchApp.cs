@@ -143,6 +143,9 @@ namespace Stretching.App
         private void PlotGraph()
         {
             //TODO: Plot graph
+
+
+
             throw new NotImplementedException();
         }
 
