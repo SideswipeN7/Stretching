@@ -31,6 +31,8 @@ namespace Stretching.App
         public StretchApp(MainWindow window) : this()
         {
             window_ = window;
+            PlotGraph();
+
         }
 
         /**
@@ -57,6 +59,7 @@ namespace Stretching.App
          */
         public void ReadFile()
         {
+           
             try
             {
                 var fileData = reader_.ReadFile();
@@ -134,6 +137,7 @@ namespace Stretching.App
             else
             {
                 //TODO: Show message cant plot graph
+
             }
         }
 
@@ -142,11 +146,22 @@ namespace Stretching.App
          */
         private void PlotGraph()
         {
-            //TODO: Plot graph
+            window_.CartesianChart1.Series = new LiveCharts.SeriesCollection
+            {
+               new  LiveCharts.Wpf.LineSeries
 
-
-
-            throw new NotImplementedException();
+                {
+                    Values = new LiveCharts.ChartValues<LiveCharts.Defaults.ObservablePoint>
+                    {
+                        new LiveCharts.Defaults.ObservablePoint(0,3),
+                         new LiveCharts.Defaults.ObservablePoint(4,7),
+                          new LiveCharts.Defaults.ObservablePoint(5,3),
+                           new LiveCharts.Defaults.ObservablePoint(6,7),
+                            new LiveCharts.Defaults.ObservablePoint(10,8)
+                    },
+                    PointGeometrySize = 10
+                }
+            };
         }
 
         /**
