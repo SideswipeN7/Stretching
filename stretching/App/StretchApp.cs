@@ -3,11 +3,13 @@ using Stretching.App.Notifications;
 using Stretching.App.Parser;
 using Stretching.Reader;
 using System;
+
 using static Stretching.App.Notifications.Notifier.MESSAGES;
 using static Stretching.App.Notifications.Notifier.TITLES;
 using static Stretching.Logger.Logger;
 using static System.Windows.MessageBoxButton;
 using static System.Windows.MessageBoxImage;
+
 
 namespace Stretching.App
 {
@@ -20,6 +22,7 @@ namespace Stretching.App
         private MainWindow window_;
         private StretchData data_;
         private Logger.Logger logger_;
+        private Solving.Solver solver_;
 
         /******************************************************************************************/
         /******************************        Constructor       **********************************/
@@ -31,8 +34,6 @@ namespace Stretching.App
         public StretchApp(MainWindow window) : this()
         {
             window_ = window;
-            PlotGraph();
-
         }
 
         /**
@@ -44,6 +45,7 @@ namespace Stretching.App
             parser_ = new TraParser();
             notifier_ = new Notifier();
             logger_ = new Logger.Logger();
+            solver_ = new Solving.Solver(); 
             //Allow debug
             logger_.IsDebug = true;
             logger_.Log("APP Started");
@@ -131,7 +133,7 @@ namespace Stretching.App
         {
             if (data_ != null)
             {
-                ShowData();
+               // ShowData();
                 PlotGraph();
             }
             else
@@ -146,22 +148,7 @@ namespace Stretching.App
          */
         private void PlotGraph()
         {
-            window_.CartesianChart1.Series = new LiveCharts.SeriesCollection
-            {
-               new  LiveCharts.Wpf.LineSeries
-
-                {
-                    Values = new LiveCharts.ChartValues<LiveCharts.Defaults.ObservablePoint>
-                    {
-                        new LiveCharts.Defaults.ObservablePoint(0,3),
-                         new LiveCharts.Defaults.ObservablePoint(4,7),
-                          new LiveCharts.Defaults.ObservablePoint(5,3),
-                           new LiveCharts.Defaults.ObservablePoint(6,7),
-                            new LiveCharts.Defaults.ObservablePoint(10,8)
-                    },
-                    PointGeometrySize = 10
-                }
-            };
+            solver_.PlotGraph(window_.CartesianChart1, data_.GetData());
         }
 
         /**

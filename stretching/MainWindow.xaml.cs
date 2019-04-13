@@ -14,7 +14,6 @@ namespace Stretching
     public partial class MainWindow : Window
     {
         StretchApp app_;
-        private string[] Labels;
 
         public MainWindow()
         {

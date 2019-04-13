@@ -118,5 +118,8 @@
     <Resource Include="Resources\chart.png" />
     <Resource Include="Resources\folder.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="LiveCharts\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
