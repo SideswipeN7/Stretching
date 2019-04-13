@@ -10,7 +10,7 @@
         Icon="Resources/chart.png"
         Title="MainWindow" Height="450" Width="800">
 
-    <DockPanel>
+    <DockPanel Margin="0,0,-0.4,0">
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_File">
                 <MenuItem Header="_Open" Click="Open_Click">
@@ -26,6 +26,15 @@
             </MenuItem>
         </Menu>
         <TextBox AcceptsReturn="True" />
-        <Wpf:CartesianChart x:Name="CartesianChart1" Height="300" VerticalAlignment="Top" Width="550" Margin="0,0.4,0,0"/>
+        <Wpf:CartesianChart x:Name="CartesianChart1" Margin="40,30.4,40,30" RenderTransformOrigin="0.5,0.5">
+            <Wpf:CartesianChart.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform AngleY="-0.174"/>
+                    <RotateTransform/>
+                    <TranslateTransform Y="-0.597"/>
+                </TransformGroup>
+            </Wpf:CartesianChart.RenderTransform>
+        </Wpf:CartesianChart>
     </DockPanel>
 </Window>
