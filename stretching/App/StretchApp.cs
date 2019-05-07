@@ -3,11 +3,13 @@ using Stretching.App.Notifications;
 using Stretching.App.Parser;
 using Stretching.Reader;
 using System;
+
 using static Stretching.App.Notifications.Notifier.MESSAGES;
 using static Stretching.App.Notifications.Notifier.TITLES;
 using static Stretching.Logger.Logger;
 using static System.Windows.MessageBoxButton;
 using static System.Windows.MessageBoxImage;
+
 
 namespace Stretching.App
 {
@@ -20,6 +22,7 @@ namespace Stretching.App
         private MainWindow window_;
         private StretchData data_;
         private Logger.Logger logger_;
+        private Solving.Solver solver_;
 
         /******************************************************************************************/
         /******************************        Constructor       **********************************/
@@ -42,6 +45,7 @@ namespace Stretching.App
             parser_ = new TraParser();
             notifier_ = new Notifier();
             logger_ = new Logger.Logger();
+            solver_ = new Solving.Solver(); 
             //Allow debug
             logger_.IsDebug = true;
             logger_.Log("APP Started");
@@ -57,6 +61,7 @@ namespace Stretching.App
          */
         public void ReadFile()
         {
+           
             try
             {
                 var fileData = reader_.ReadFile();
@@ -128,12 +133,13 @@ namespace Stretching.App
         {
             if (data_ != null)
             {
-                ShowData();
+               // ShowData();
                 PlotGraph();
             }
             else
             {
                 //TODO: Show message cant plot graph
+
             }
         }
 
@@ -142,8 +148,7 @@ namespace Stretching.App
          */
         private void PlotGraph()
         {
-            //TODO: Plot graph
-            throw new NotImplementedException();
+            solver_.PlotGraph(window_.CartesianChart1, data_.GetData());
         }
 
         /**

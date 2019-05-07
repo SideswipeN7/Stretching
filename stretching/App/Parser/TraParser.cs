@@ -1,4 +1,6 @@
 ﻿using Stretching.App.Data;
+using System.Globalization;
+using static System.StringSplitOptions;
 
 namespace Stretching.App.Parser
 {
@@ -12,21 +14,25 @@ namespace Stretching.App.Parser
         private static readonly char SPLIT_LINE_DATA_SEPARATOR = ';';
 
         /**
-         * Methods that Parse string lines to data
-         * @param string[]
-         * @return StretchData
-         */
+* Methods that Parse string lines to data
+* @param string[]
+* @return StretchData
+*/
         public StretchData Parse(string[] data)
         {
             StretchData output = new StretchData();
             for (int i = 0; i < data.Length; ++i)
             {
                 var row = data[i].Trim();
-                if (!row.StartsWith(COMMENT_ROW_TEMPLATE) || !row.StartsWith(TITLE_ROW_TEMPLATE))
+                if (row.StartsWith(" ") || row.Length <= 0)//Skip empty lines
+                {
+                    continue;
+                }
+                if (!row.StartsWith(COMMENT_ROW_TEMPLATE) && !row.StartsWith(TITLE_ROW_TEMPLATE))
                 {
                     if (row.StartsWith(PRELOAD_ROW_TEMPLATE))//Get PRE-LOAD
                     {
-                        var preData = row.Split(SPLIT_ARRAY, 2);
+                        var preData = row.Split(SPLIT_ARRAY, 3, RemoveEmptyEntries);
                         if (double.TryParse(preData[1], out double preVal))
                         {
                             output.PreLoadValue = preVal;
@@ -39,11 +45,11 @@ namespace Stretching.App.Parser
                     }
                     else if (row.StartsWith(TEST_SPEED_ROW_TEMPLATE))//Get TEST SPEED
                     {
-                        var speedData = row.Split(SPLIT_ARRAY, 3);
+                        var speedData = row.Split(SPLIT_ARRAY, 4, RemoveEmptyEntries);
                         if (double.TryParse(speedData[2], out double speedVal))
                         {
                             output.TestSpeedValue = speedVal;
-                            output.TestSpeedUnit = speedData[2];
+                            output.TestSpeedUnit = speedData[3];
                         }
                         else
                         {
@@ -54,7 +60,7 @@ namespace Stretching.App.Parser
                     {
                         LineData lineData = new LineData();
                         var values = row.Split(SPLIT_LINE_DATA_SEPARATOR);
-                        if (double.TryParse(values[0], out double strainVal))
+                        if (double.TryParse(values[0], NumberStyles.Any, CultureInfo.InvariantCulture, out double strainVal))
                         {
                             lineData.Strain = strainVal;
                         }
@@ -62,7 +68,7 @@ namespace Stretching.App.Parser
                         {
                             throw new TraParseException($"\"Strain\" data wrong value at row: {i + 1}");
                         }
-                        if (double.TryParse(values[1], out double forceVal))
+                        if (double.TryParse(values[1], NumberStyles.Any, CultureInfo.InvariantCulture, out double forceVal))
                         {
                             lineData.StandardForce = forceVal;
                         }
@@ -70,7 +76,7 @@ namespace Stretching.App.Parser
                         {
                             throw new TraParseException($"\"Standard force\" data wrong value at row: {i + 1}");
                         }
-                        if (double.TryParse(values[2], out double gripVal))
+                        if (double.TryParse(values[2], NumberStyles.Any, CultureInfo.InvariantCulture, out double gripVal))
                         {
                             lineData.GripToGrip = gripVal;
                         }

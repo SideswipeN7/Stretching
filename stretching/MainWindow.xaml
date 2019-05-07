@@ -1,15 +1,16 @@
-﻿<Window x:Class="Stretching.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
         xmlns:local="clr-namespace:Stretching"
+        xmlns:Wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf" x:Class="Stretching.MainWindow"
         mc:Ignorable="d"
         Icon="Resources/chart.png"
         Title="MainWindow" Height="450" Width="800">
 
-    <DockPanel>
+    <DockPanel Margin="0,0,-0.4,0">
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_File">
                 <MenuItem Header="_Open" Click="Open_Click">
@@ -25,5 +26,15 @@
             </MenuItem>
         </Menu>
         <TextBox AcceptsReturn="True" />
+        <Wpf:CartesianChart x:Name="CartesianChart1" Margin="40,30.4,40,30" RenderTransformOrigin="0.5,0.5">
+            <Wpf:CartesianChart.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform AngleY="-0.174"/>
+                    <RotateTransform/>
+                    <TranslateTransform Y="-0.597"/>
+                </TransformGroup>
+            </Wpf:CartesianChart.RenderTransform>
+        </Wpf:CartesianChart>
     </DockPanel>
 </Window>

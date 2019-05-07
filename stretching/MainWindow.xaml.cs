@@ -1,5 +1,10 @@
 ﻿using Stretching.App;
 using System.Windows;
+using LiveCharts;
+using LiveCharts.Wpf;
+using LiveCharts.Defaults;
+using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace Stretching
 {
@@ -9,11 +14,15 @@ namespace Stretching
     public partial class MainWindow : Window
     {
         StretchApp app_;
+
         public MainWindow()
         {
             InitializeComponent();
             app_ = new StretchApp(this);
         }
+
+
+
 
         private void Open_Click(object sender, RoutedEventArgs e)
         {
@@ -24,5 +33,7 @@ namespace Stretching
         {
             app_.SaveGraph();
         }
+
+
     }
 }
