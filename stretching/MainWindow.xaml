@@ -8,7 +8,7 @@
         xmlns:Wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf" x:Class="Stretching.MainWindow"
         mc:Ignorable="d"
         Icon="Resources/chart.png"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="486.229" Width="800">
 
     <DockPanel>
         <Menu DockPanel.Dock="Top">
@@ -37,6 +37,14 @@
             <TextBox x:Name="txbL0" Height="17" Margin="0,310,693,0" TextWrapping="Wrap"  VerticalAlignment="Top" HorizontalAlignment="Right" Width="66" Text="50" TextAlignment="Right"/>
             <Label Content="mm" Margin="0,306,664,72" RenderTransformOrigin="0,0" HorizontalAlignment="Right" Width="31"/>
             <Button x:Name="btnCalc" Content="Przelicz" HorizontalAlignment="Left" Margin="128,304,0,0" VerticalAlignment="Top" Width="75" Height="23" Click="BtnCalc_Click"/>
+            <Grid x:Name="gridData" HorizontalAlignment="Left" Height="79" Margin="15,342,0,-20" VerticalAlignment="Top" Width="767">
+                <Label Content="Pre-load:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="76"/>
+                <Label x:Name="lblPreLoadVal" Content="Pre-load value" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="81,0,0,0" Width="114"/>
+                <Label x:Name="lblPreLoadUnit" Content="Pre-load value unit" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="195,0,0,0"/>
+                <Label Content="Test speed:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,31,0,0" Width="76"/>
+                <Label x:Name="lblSpeedVal" Content="test sped value" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="81,31,0,0" Width="114"/>
+                <Label x:Name="lblSpeedUnit" Content="test speed value unit" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="195,31,0,0" Width="110"/>
+            </Grid>
         </Grid>
     </DockPanel>
 </Window>

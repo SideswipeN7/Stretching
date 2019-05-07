@@ -33,6 +33,8 @@ namespace Stretching.App
         public StretchApp(MainWindow window) : this()
         {
             window_ = window;
+            // on start hide data grid
+            ShowData();
         }
 
         /**
@@ -167,7 +169,7 @@ namespace Stretching.App
                 data_ = dataVanilla_.Recalc(l0);
 
 
-                //ShowData();
+                ShowData();
                 PlotGraph();
             }
             else
@@ -189,8 +191,23 @@ namespace Stretching.App
          */
         private void ShowData()
         {
-            //TODO: Show data
-            throw new NotImplementedException();
+            if (data_ != null)
+            {
+                //show grid
+                window_.gridData.Visibility = System.Windows.Visibility.Visible;
+                //pre-load
+                window_.lblPreLoadVal.Content = data_.PreLoadValue;
+                window_.lblPreLoadUnit.Content = data_.PreLoadUnit;
+                //test speed
+                window_.lblSpeedVal.Content = data_.TestSpeedValue;
+                window_.lblSpeedUnit.Content = data_.TestSpeedUnit;
+            }
+            else
+            {
+                //hide grid
+                window_.gridData.Visibility = System.Windows.Visibility.Hidden;
+            }
+
         }
 
         /**
