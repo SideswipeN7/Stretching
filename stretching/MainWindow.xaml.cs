@@ -21,8 +21,9 @@ namespace Stretching
             app_ = new StretchApp(this);
         }
 
-
-
+        /******************************************************************************************/
+        /*********************************        ACTIONS       ***********************************/
+        /******************************************************************************************/
 
         private void Open_Click(object sender, RoutedEventArgs e)
         {
@@ -34,6 +35,9 @@ namespace Stretching
             app_.SaveGraph();
         }
 
-
+        private void BtnCalc_Click(object sender, RoutedEventArgs e)
+        {
+            app_.DrawGraph();
+        }
     }
 }

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Stretching.App.Data
 {
@@ -41,5 +43,23 @@ namespace Stretching.App.Data
          * @returns LineData
          */
         public LineData GetDataAt(int id) => data_[id];
+
+        internal StretchData Recalc(double? l0)
+        {
+            var newList = new List<LineData>(data_);
+            foreach (LineData item in newList)
+            {
+                item.ReCalc(l0);
+            }
+            return new StretchData()
+            {
+                Path = Path,
+                PreLoadUnit = PreLoadUnit,
+                PreLoadValue = PreLoadValue,
+                TestSpeedUnit = TestSpeedUnit,
+                TestSpeedValue = TestSpeedValue,
+                data_ = newList
+            };
+        }
     }
 }

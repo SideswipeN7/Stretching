@@ -3,13 +3,11 @@ using Stretching.App.Notifications;
 using Stretching.App.Parser;
 using Stretching.Reader;
 using System;
-
 using static Stretching.App.Notifications.Notifier.MESSAGES;
 using static Stretching.App.Notifications.Notifier.TITLES;
 using static Stretching.Logger.Logger;
 using static System.Windows.MessageBoxButton;
 using static System.Windows.MessageBoxImage;
-
 
 namespace Stretching.App
 {
@@ -20,6 +18,7 @@ namespace Stretching.App
         private TraParser parser_;
         private Notifier notifier_;
         private MainWindow window_;
+        private StretchData dataVanilla_;
         private StretchData data_;
         private Logger.Logger logger_;
         private Solving.Solver solver_;
@@ -45,7 +44,7 @@ namespace Stretching.App
             parser_ = new TraParser();
             notifier_ = new Notifier();
             logger_ = new Logger.Logger();
-            solver_ = new Solving.Solver(); 
+            solver_ = new Solving.Solver();
             //Allow debug
             logger_.IsDebug = true;
             logger_.Log("APP Started");
@@ -61,7 +60,6 @@ namespace Stretching.App
          */
         public void ReadFile()
         {
-           
             try
             {
                 var fileData = reader_.ReadFile();
@@ -69,7 +67,7 @@ namespace Stretching.App
                 {
                     try
                     {
-                        data_ = parser_.Parse(fileData);
+                        dataVanilla_ = parser_.Parse(fileData);
                         OnDataLoad();
                     }
                     catch (TraParseException ex)
@@ -122,6 +120,15 @@ namespace Stretching.App
             throw new NotImplementedException();
         }
 
+        /**
+         * Method that recalcs data and draws graphs
+         */
+        internal void DrawGraph()
+        {
+            OnDataLoad();
+        }
+
+
         /******************************************************************************************/
         /***************************       Private methods       **********************************/
         /******************************************************************************************/
@@ -131,15 +138,41 @@ namespace Stretching.App
          */
         private void OnDataLoad()
         {
-            if (data_ != null)
+            double? l0;
+            try
             {
-               // ShowData();
+                l0 = GetL0();
+                if (l0 == null)
+                {
+                    notifier_.Notify(L0_NAN, ERROR, OK, Error);
+                }
+                else
+                {
+                    RecalcData(l0);
+                }
+            }
+            catch (ArgumentException ex)
+            {
+                notifier_.Notify(NO_L0, ERROR, OK, Error);
+            }
+        }
+
+        /**
+         * Method to recalculate data from
+         */
+        private void RecalcData(double? l0)
+        {
+            if (dataVanilla_ != null)
+            {
+                data_ = dataVanilla_.Recalc(l0);
+
+
+                //ShowData();
                 PlotGraph();
             }
             else
             {
                 //TODO: Show message cant plot graph
-
             }
         }
 
@@ -158,6 +191,31 @@ namespace Stretching.App
         {
             //TODO: Show data
             throw new NotImplementedException();
+        }
+
+        /**
+         * Method to get value of L0 dimension from window
+         * @returns double? - value if paraseble or null if not parsable
+         * @throws ArgumentException if textbox value if empty
+         */
+        private double? GetL0()
+        {
+            if (window_.txbL0.Text == String.Empty)
+            {
+                //Log
+                logger_.Log("L0 is empty", LOG_TYPE.ERROR);
+                throw new ArgumentException();
+            }
+
+            if (double.TryParse(window_.txbL0.Text, out double result))
+            {
+                //Log
+                logger_.Log($"L0 = {result} mm", LOG_TYPE.INFO);
+                return result;
+            }
+            //Log
+            logger_.Log($"L0 is NAN = {window_.txbL0.Text}", LOG_TYPE.ERROR);
+            return null;
         }
     }
 }
