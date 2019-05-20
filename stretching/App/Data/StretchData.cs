@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 
 namespace Stretching.App.Data
 {
@@ -13,6 +11,8 @@ namespace Stretching.App.Data
         public double TestSpeedValue { get; set; }
         public string TestSpeedUnit { get; set; }
         private IList<LineData> data_;
+        private double fi_;
+        private double l0_;
 
         /**
          * Methods that adds new line or multiple lines of data
@@ -30,6 +30,8 @@ namespace Stretching.App.Data
 
             }
         }
+        public double getFi() => fi_;
+        public double getL0() => l0_;
 
         /**
          * Methods that returns list of lines with data
@@ -44,7 +46,7 @@ namespace Stretching.App.Data
          */
         public LineData GetDataAt(int id) => data_[id];
 
-        internal StretchData Recalc(double? l0)
+        internal StretchData Recalc(double? l0, double? fi)
         {
             var newList = new List<LineData>(data_);
             foreach (LineData item in newList)
@@ -58,7 +60,9 @@ namespace Stretching.App.Data
                 PreLoadValue = PreLoadValue,
                 TestSpeedUnit = TestSpeedUnit,
                 TestSpeedValue = TestSpeedValue,
-                data_ = newList
+                data_ = newList,
+                fi_= (double)fi,
+                l0_= (double)l0
             };
         }
     }

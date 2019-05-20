@@ -14,10 +14,10 @@ namespace Stretching.App.Parser
         private static readonly char SPLIT_LINE_DATA_SEPARATOR = ';';
 
         /**
-* Methods that Parse string lines to data
-* @param string[]
-* @return StretchData
-*/
+         * Methods that Parse string lines to data
+         * @param string[]
+         * @return StretchData
+         */
         public StretchData Parse(string[] data)
         {
             StretchData output = new StretchData();
