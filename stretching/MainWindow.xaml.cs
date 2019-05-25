@@ -1,10 +1,5 @@
 ﻿using Stretching.App;
 using System.Windows;
-using LiveCharts;
-using LiveCharts.Wpf;
-using LiveCharts.Defaults;
-using System.Windows.Controls;
-using System.Windows.Media;
 
 namespace Stretching
 {
@@ -21,23 +16,26 @@ namespace Stretching
             app_ = new StretchApp(this);
         }
 
-        /******************************************************************************************/
-        /*********************************        ACTIONS       ***********************************/
-        /******************************************************************************************/
-
-        private void Open_Click(object sender, RoutedEventArgs e)
-        {
-            app_.ReadFile();
-        }
-
-        private void Save_Click(object sender, RoutedEventArgs e)
-        {
-            app_.SaveGraph();
-        }
-
         private void BtnCalc_Click(object sender, RoutedEventArgs e)
         {
             app_.DrawGraph();
         }
+
+        private void BtnCalcR02_Click(object sender, RoutedEventArgs e)
+        {
+            app_.ToggleR02();
+            app_.DrawGraph();
+        }
+
+        private void BtnRead_Click(object sender, RoutedEventArgs e)
+        {
+            app_.ReadFile();
+        }
+
+        private void BtnSave_Click(object sender, RoutedEventArgs e)
+        {
+            app_.SaveGraph();
+        }
+
     }
 }

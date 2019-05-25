@@ -16,7 +16,7 @@ namespace Stretching.App.Notifications
         public MessageBoxResult Notify(MESSAGES message, TITLES title, MessageBoxButton button, MessageBoxImage image) => MessageBox.Show(MESSAGES_DICTIONARY[message], TITLES_DICTIONARY[title], button, image);
 
         // Enums to map text
-        public enum MESSAGES { WRONG_FILE, NO_DATA_IN_FILE, WRONG_DATA, L0_NAN, NO_L0 };
+        public enum MESSAGES { WRONG_FILE, NO_DATA_IN_FILE, WRONG_DATA, L0_NAN, NO_L0, FI_NAN, NO_FI };
         public enum TITLES { ERROR, WARNING, CONFIRMATION, FILE_ERROR };
 
         //Dictionaries to get correct text for user
@@ -27,6 +27,8 @@ namespace Stretching.App.Notifications
             [MESSAGES.WRONG_DATA] = "W wybranym pliku znajdują się niewłaściwe dane",
             [MESSAGES.L0_NAN] = "Wymiar L0 nie jest liczbą",
             [MESSAGES.NO_L0] = "Brak wymiaru L0",
+            [MESSAGES.FI_NAN] = "Wymiar Φ nie jest liczbą",
+            [MESSAGES.NO_FI] = "Brak wymiaru Φ",
         };
 
         private readonly static Dictionary<TITLES, string> TITLES_DICTIONARY = new Dictionary<TITLES, string>

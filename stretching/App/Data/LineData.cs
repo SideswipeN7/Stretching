@@ -5,13 +5,21 @@
         public double Strain { get; set; }
         public double StandardForce { get; set; }
         public double GripToGrip { get; set; }
-        private double deltaL;
+        private double trueLength;
 
-        public LiveCharts.Defaults.ObservablePoint ToObservablePoint() => new LiveCharts.Defaults.ObservablePoint() { X = deltaL, Y = StandardForce };
-
+        /**
+         * Method to change data in to ObservablePoint
+         * @requies to Recalc be called first
+         * @returns ObservablePoint
+         */
+        public LiveCharts.Defaults.ObservablePoint ToObservablePoint() => new LiveCharts.Defaults.ObservablePoint() { X = trueLength, Y = StandardForce };
+        /**
+         * Method to calculate value of true point length from l0
+         * @param l0
+         */
         internal void ReCalc(double? l0)
         {
-            deltaL = (GripToGrip - (double)l0) / (double)l0;
+            trueLength = GripToGrip + (double)l0;
         }
     }
 }
