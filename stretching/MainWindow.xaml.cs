@@ -1,5 +1,6 @@
 ﻿using Stretching.App;
 using System.Windows;
+using System.Windows.Input;
 
 namespace Stretching
 {
@@ -37,5 +38,50 @@ namespace Stretching
             app_.SaveGraph();
         }
 
+        /******************************************************************************************/
+        /**************************       Menu bar actions       **********************************/
+        /******************************************************************************************/
+
+        private void TitleBar_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                if (e.ClickCount == 2)
+                {
+                    AdjustWindowSize();
+                }
+                else
+                {
+                    Application.Current.MainWindow.DragMove();
+                }
+        }
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
+        private void MaximizeButton_Click(object sender, RoutedEventArgs e)
+        {
+            AdjustWindowSize();
+        }
+
+        private void MinimizeButton_Click(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
+
+        private void AdjustWindowSize()
+        {
+            if (WindowState == WindowState.Maximized)
+            {
+                WindowState = WindowState.Normal;
+                MaxButton.Tag = "1";
+            }
+            else
+            {
+                WindowState = WindowState.Maximized;
+                MaxButton.Tag = "2";
+            }
+
+        }
     }
 }
