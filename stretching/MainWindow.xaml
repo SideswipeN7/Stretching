@@ -8,74 +8,107 @@
         xmlns:Wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf" x:Class="Stretching.MainWindow"
         mc:Ignorable="d"
         Icon="Resources/chart.png"
-        Title="Statyczna próba rozciągania" Height="471.229" Width="1012" MinWidth="1012" MinHeight="471.229">
+        Title="Statyczna próba rozciągania" Height="835.229" Width="1012" MinWidth="1012" MinHeight="471.229" WindowStyle="None">
 
-    <DockPanel>
-        <Grid Width="960" Margin="0,0,0,130">
-            <Grid Margin="-20,0,-41,-22">
-                <Wpf:CartesianChart x:Name="CartesianChart1" Margin="229,10,0,26" HorizontalAlignment="Left" Width="736" Background="White"/>
-            </Grid>
+    <DockPanel x:Name="RootWindow">
+        <DockPanel x:Name="TitleBar" DockPanel.Dock="Top" Background="#FF000CFF" MouseDown="TitleBar_MouseDown" Height="26">
+            <Button x:Name="CloseButton" Content=""
+                    Style="{StaticResource BtnMenuBar}"
+                    Click="CloseButton_Click"                 
+                    DockPanel.Dock="Right" BorderBrush="#00AE3333" Width="26" >
+                <Button.Background>
+                    <ImageBrush Stretch="Uniform" TileMode="Tile" ImageSource="Resources/btn_close.png"/>
+                </Button.Background>
+            </Button>
+            <Button x:Name="MaxButton" Content="" 
+                     Style="{StaticResource BtnMenuBar}"
+                    Click="MaximizeButton_Click"
+                    DockPanel.Dock="Right" BorderBrush="#00707070" Width="26" >
+                <Button.Background>
+                    <ImageBrush ImageSource="Resources/btn_resize.png" Stretch="Uniform"/>
+                </Button.Background>
+            </Button>
+            <Button x:Name="MinButton" Content=""
+                    Style="{StaticResource BtnMenuBar}"
+                    Click="MinimizeButton_Click"
+                    DockPanel.Dock="Right" BorderBrush="#00707070" Width="26" >
+                <Button.Background>
+                    <ImageBrush ImageSource="Resources/btn_minimize.png" Stretch="Uniform"/>
+                </Button.Background>
+            </Button>
 
-            <Grid x:Name="gridParams" HorizontalAlignment="Right" Height="100" Margin="-20,185,812,0" VerticalAlignment="Top" Width="168">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="25*"/>
-                    <ColumnDefinition Width="38*"/>
-                </Grid.ColumnDefinitions>
-                <TextBox x:Name="txbL0" Height="24" Margin="38,20,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" HorizontalAlignment="Left" Width="80" Text="50" TextAlignment="Center" FontFamily="Segoe UI Light" FontSize="14" Grid.ColumnSpan="2"/>
-                <TextBox x:Name="txbfi" Height="24" Margin="38,54,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" HorizontalAlignment="Left" Width="80" Text="6" TextAlignment="Center" FontFamily="Segoe UI Light" FontSize="14" Grid.ColumnSpan="2"/>
-                <Label Content="mm" Margin="0,50,7,16" RenderTransformOrigin="0,0" HorizontalAlignment="Right" Width="38" FontSize="14" FontFamily="Segoe UI Light" Grid.Column="1"/>
-                <Label Content="mm" Margin="0,18,0,54" RenderTransformOrigin="0,0" HorizontalAlignment="Right" Width="42" FontFamily="Segoe UI Light" FontSize="14" Grid.Column="1"/>
-                <Label Content="0" Margin="0,22,29,54" RenderTransformOrigin="0,0" HorizontalAlignment="Right" Width="21" FontWeight="Bold"/>
-                <Label Content="L" Margin="0,15,29,56" RenderTransformOrigin="0,0" FontSize="14" HorizontalAlignment="Right" Width="32" FontWeight="Bold"/>
-                <Label Content="Φ" Margin="0,50,34,17" RenderTransformOrigin="0,0" FontSize="18" HorizontalAlignment="Right" Width="27" FontWeight="Bold"/>
-            </Grid>
-            <Grid x:Name="gridControls" HorizontalAlignment="Right" Height="180" Margin="-20,0,809,0" VerticalAlignment="Top" Width="171">
-                <Button Style="{StaticResource MyButtonStyle}" x:Name="btnCalc" Cursor="Hand" Content="Przelicz Dane" HorizontalAlignment="Right" Margin="0,54,39,0" VerticalAlignment="Top" Width="122" Height="30" Click="BtnCalc_Click" RenderTransformOrigin="0.493,0.783" FontFamily="Segoe UI Light" FontSize="14"/>
-                <Button Style="{StaticResource MyButtonStyle}" x:Name="btnCalcR02" Cursor="Hand" Content="Pokaż R02" HorizontalAlignment="Right" Margin="0,98,39,0" VerticalAlignment="Top" Width="122" Height="30" Click="BtnCalcR02_Click" RenderTransformOrigin="0.493,0.783" FontFamily="Segoe UI Light" FontSize="14"/>
-                <Button Style="{StaticResource MyButtonStyle}" x:Name="btnRead" Cursor="Hand" Content="Wczytaj Plik" HorizontalAlignment="Right" Margin="0,10,39,0" VerticalAlignment="Top" Width="122" Height="30" RenderTransformOrigin="0.493,0.783" FontFamily="Segoe UI Light" FontSize="14" Click="BtnRead_Click"/>
-                <Button Style="{StaticResource MyButtonStyle}" x:Name="btnSave" Cursor="Hand" Content="Zapisz Wykres" HorizontalAlignment="Right" Margin="0,143,39,0" VerticalAlignment="Top" Width="122" Height="30" RenderTransformOrigin="0.493,0.783" FontFamily="Segoe UI Light" FontSize="14" Click="BtnSave_Click"/>
-            </Grid>
+            <TextBlock Text="Statyczna próba rozciągania" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </DockPanel>
 
+        <ContentControl Content="{Binding CurrentPage}" />
 
-            <Separator Height="25" Margin="-20,332,-21,-47" VerticalAlignment="Top"/>
-            <Grid x:Name="GridComputed" HorizontalAlignment="Left" Height="99" Margin="-20,341,0,-130" VerticalAlignment="Top" Width="961">
-                <Grid x:Name="gridData" HorizontalAlignment="Left" Height="65" Margin="10,10,0,0" VerticalAlignment="Top" Width="324">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="166*"/>
-                        <ColumnDefinition Width="149*"/>
-                    </Grid.ColumnDefinitions>
-                    <Label Content="Pre-load:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="81" FontSize="14" FontWeight="Medium"/>
-                    <Label x:Name="lblPreLoadVal" Content="Pre-load value" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="86,2,0,0" Width="110" Grid.ColumnSpan="2" FontFamily="Segoe UI Light" FontSize="14"/>
-                    <Label x:Name="lblPreLoadUnit" Content="Pre-load value unit" VerticalAlignment="Top" Margin="33,2,10,0" Grid.Column="1" FontFamily="Segoe UI Light" FontSize="14"/>
-                    <Label Content="Test speed:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,31,0,0" Width="81" FontSize="14" FontWeight="Medium"/>
-                    <Label x:Name="lblSpeedVal" Content="test sped value" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="86,31,0,0" Width="110" Grid.ColumnSpan="2" FontFamily="Segoe UI Light" FontSize="14"/>
-                    <Label x:Name="lblSpeedUnit" Content="test speed value unit" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="33,31,0,0" Width="110" Grid.Column="1" FontFamily="Segoe UI Light" FontSize="14"/>
+        <Viewbox>
+            <Grid Width="960" Margin="0,0,0,130">
+                <Grid Margin="156,0,0,-32" HorizontalAlignment="Left" Width="733" Height="696" VerticalAlignment="Bottom">
+                    <Wpf:CartesianChart x:Name="CartesianChart1" Margin="10,26,-53,0" HorizontalAlignment="Left" Width="776" Background="White" Height="636" VerticalAlignment="Top"/>
                 </Grid>
-                <Grid x:Name="gridDataRead" HorizontalAlignment="Left" Height="65" Margin="339,10,0,0" VerticalAlignment="Top" Width="612">
+
+                <Grid x:Name="gridParams" Margin="-20,0,812,374" Width="168" Height="98" VerticalAlignment="Bottom">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="166*"/>
-                        <ColumnDefinition Width="149*"/>
+                        <ColumnDefinition Width="67*"/>
+                        <ColumnDefinition Width="101*"/>
                     </Grid.ColumnDefinitions>
-                    <Label Content="ΔL:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="37" FontSize="14" FontWeight="Medium"/>
-                    <Label x:Name="lblDeltaLVal" Content="ΔL value" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,2,171,0" Width="110" FontFamily="Segoe UI Light" FontSize="14"/>
-                    <Label Content="Rm:" HorizontalAlignment="Left" Margin="0,31,0,5" Width="37" FontSize="14" FontWeight="Medium"/>
-                    <Label x:Name="lblRmVal" Content="Rm value" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="42,31,0,0" Width="110" FontFamily="Segoe UI Light" FontSize="14"/>
-                    <Label x:Name="lblRmUnit" Content="Rm value unit" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="157,31,0,0" Width="110" FontFamily="Segoe UI Light" FontSize="14" RenderTransformOrigin="0.118,0.517" Grid.ColumnSpan="2"/>
-                    <Label Content="F max:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="313,0,0,0" Width="51" FontSize="14" FontWeight="Medium" Grid.ColumnSpan="2"/>
-                    <Label x:Name="lblFmaxVal" Content="F max value" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="46,0,0,0" Width="110" FontFamily="Segoe UI Light" FontSize="14" Grid.Column="1"/>
-                    <Label x:Name="lblFmaxUnit" Content="F max value unit" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="156,0,0,0" Width="110" FontFamily="Segoe UI Light" FontSize="14" RenderTransformOrigin="0.118,0.517" Grid.Column="1"/>
+                    <TextBox x:Name="txbL0" Height="24" Margin="38,20,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" HorizontalAlignment="Left" Width="80" Text="50" TextAlignment="Center" FontFamily="Segoe UI Light" FontSize="14" Grid.ColumnSpan="2"/>
+                    <TextBox x:Name="txbfi" Height="24" Margin="38,54,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" HorizontalAlignment="Left" Width="80" Text="6" TextAlignment="Center" FontFamily="Segoe UI Light" FontSize="14" Grid.ColumnSpan="2"/>
+                    <Label Content="mm" Margin="0,50,7,16" RenderTransformOrigin="0,0" HorizontalAlignment="Right" Width="38" FontSize="14" FontFamily="Segoe UI Light" Grid.Column="1"/>
+                    <Label Content="mm" Margin="0,18,0,54" RenderTransformOrigin="0,0" HorizontalAlignment="Right" Width="42" FontFamily="Segoe UI Light" FontSize="14" Grid.Column="1"/>
+                    <Label Content="0" Margin="0,22,29,53" RenderTransformOrigin="0,0" HorizontalAlignment="Right" Width="21" FontWeight="Bold"/>
+                    <Label Content="L" Margin="0,15,29,56" RenderTransformOrigin="0,0" FontSize="14" HorizontalAlignment="Right" Width="32" FontWeight="Bold"/>
+                    <Label Content="Φ" Margin="0,50,34,17" RenderTransformOrigin="0,0" FontSize="18" HorizontalAlignment="Right" Width="27" FontWeight="Bold"/>
                 </Grid>
-                <Grid x:Name="gridDataR02" HorizontalAlignment="Left" Height="33" Margin="654,37,0,0" VerticalAlignment="Top" Width="300">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="166*"/>
-                        <ColumnDefinition Width="149*"/>
-                    </Grid.ColumnDefinitions>
-                    <Label Content="R     :" HorizontalAlignment="Left" VerticalAlignment="Top" Width="61" FontSize="14" FontWeight="Medium"/>
-                    <Label x:Name="lblR02Val" Content="R 02 value" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="46,0,0,0" Width="110" FontFamily="Segoe UI Light" FontSize="14"/>
-                    <Label x:Name="lblR02Unit" Content="R 02 value unit" HorizontalAlignment="Left" VerticalAlignment="Top" Width="110" FontFamily="Segoe UI Light" FontSize="14" RenderTransformOrigin="0.118,0.517" Grid.Column="1"/>
-                    <Label Content="0,2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,121,3" Width="26" FontWeight="Medium"/>
+                <Grid x:Name="gridControls" Height="180" Margin="-15,0,804,470" VerticalAlignment="Bottom" Width="171">
+                    <Button Style="{StaticResource MyButtonStyle}" x:Name="btnCalc" Cursor="Hand" Content="Przelicz Dane" HorizontalAlignment="Right" Margin="0,54,39,0" VerticalAlignment="Top" Width="122" Height="30" Click="BtnCalc_Click" RenderTransformOrigin="0.493,0.783" FontFamily="Segoe UI Light" FontSize="14"/>
+                    <Button Style="{StaticResource MyButtonStyle}" x:Name="btnCalcR02" Cursor="Hand" Content="Pokaż R02" HorizontalAlignment="Right" Margin="0,98,39,0" VerticalAlignment="Top" Width="122" Height="30" Click="BtnCalcR02_Click" RenderTransformOrigin="0.493,0.783" FontFamily="Segoe UI Light" FontSize="14"/>
+                    <Button Style="{StaticResource MyButtonStyle}" x:Name="btnRead" Cursor="Hand" Content="Wczytaj Plik" HorizontalAlignment="Right" Margin="0,10,39,0" VerticalAlignment="Top" Width="122" Height="30" RenderTransformOrigin="0.493,0.783" FontFamily="Segoe UI Light" FontSize="14" Click="BtnRead_Click"/>
+                    <Button Style="{StaticResource MyButtonStyle}" x:Name="btnSave" Cursor="Hand" Content="Zapisz Wykres" HorizontalAlignment="Right" Margin="0,143,39,0" VerticalAlignment="Top" Width="122" Height="30" RenderTransformOrigin="0.493,0.783" FontFamily="Segoe UI Light" FontSize="14" Click="BtnSave_Click"/>
+                </Grid>
+
+
+                <Separator Height="16" Margin="-20,680,-23,-21" VerticalAlignment="Top" HorizontalAlignment="Right" Width="1003"/>
+                <Grid x:Name="GridComputed" HorizontalAlignment="Left" Margin="-20,696,0,-121" Width="961" Height="100">
+                    <Grid x:Name="gridData" HorizontalAlignment="Left" Height="65" Margin="10,10,0,0" VerticalAlignment="Top" Width="324">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="166*"/>
+                            <ColumnDefinition Width="149*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Pre-load:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="81" FontSize="14" FontWeight="Medium"/>
+                        <Label x:Name="lblPreLoadVal" Content="Pre-load value" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="86,2,0,0" Width="110" Grid.ColumnSpan="2" FontFamily="Segoe UI Light" FontSize="14"/>
+                        <Label x:Name="lblPreLoadUnit" Content="Pre-load value unit" VerticalAlignment="Top" Margin="33,2,10,0" Grid.Column="1" FontFamily="Segoe UI Light" FontSize="14"/>
+                        <Label Content="Test speed:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,31,0,0" Width="81" FontSize="14" FontWeight="Medium"/>
+                        <Label x:Name="lblSpeedVal" Content="test sped value" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="86,31,0,0" Width="110" Grid.ColumnSpan="2" FontFamily="Segoe UI Light" FontSize="14"/>
+                        <Label x:Name="lblSpeedUnit" Content="test speed value unit" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="33,31,0,0" Width="110" Grid.Column="1" FontFamily="Segoe UI Light" FontSize="14"/>
+                    </Grid>
+                    <Grid x:Name="gridDataRead" HorizontalAlignment="Left" Height="65" Margin="339,10,0,0" VerticalAlignment="Top" Width="612">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="166*"/>
+                            <ColumnDefinition Width="149*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="ΔL:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="37" FontSize="14" FontWeight="Medium"/>
+                        <Label x:Name="lblDeltaLVal" Content="ΔL value" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,2,171,0" Width="110" FontFamily="Segoe UI Light" FontSize="14"/>
+                        <Label Content="Rm:" HorizontalAlignment="Left" Margin="0,31,0,5" Width="37" FontSize="14" FontWeight="Medium"/>
+                        <Label x:Name="lblRmVal" Content="Rm value" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="42,31,0,0" Width="110" FontFamily="Segoe UI Light" FontSize="14"/>
+                        <Label x:Name="lblRmUnit" Content="Rm value unit" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="157,31,0,0" Width="110" FontFamily="Segoe UI Light" FontSize="14" RenderTransformOrigin="0.118,0.517" Grid.ColumnSpan="2"/>
+                        <Label Content="F max:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="313,0,0,0" Width="51" FontSize="14" FontWeight="Medium" Grid.ColumnSpan="2"/>
+                        <Label x:Name="lblFmaxVal" Content="F max value" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="46,0,0,0" Width="110" FontFamily="Segoe UI Light" FontSize="14" Grid.Column="1"/>
+                        <Label x:Name="lblFmaxUnit" Content="F max value unit" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="156,0,0,0" Width="110" FontFamily="Segoe UI Light" FontSize="14" RenderTransformOrigin="0.118,0.517" Grid.Column="1"/>
+                    </Grid>
+                    <Grid x:Name="gridDataR02" HorizontalAlignment="Left" Height="33" Margin="654,37,0,0" VerticalAlignment="Top" Width="300">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="166*"/>
+                            <ColumnDefinition Width="149*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="R     :" HorizontalAlignment="Left" VerticalAlignment="Top" Width="61" FontSize="14" FontWeight="Medium"/>
+                        <Label x:Name="lblR02Val" Content="R 02 value" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="46,0,0,0" Width="110" FontFamily="Segoe UI Light" FontSize="14"/>
+                        <Label x:Name="lblR02Unit" Content="R 02 value unit" HorizontalAlignment="Left" VerticalAlignment="Top" Width="110" FontFamily="Segoe UI Light" FontSize="14" RenderTransformOrigin="0.118,0.517" Grid.Column="1"/>
+                        <Label Content="0,2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,121,3" Width="26" FontWeight="Medium"/>
+                    </Grid>
                 </Grid>
             </Grid>
-        </Grid>
+        </Viewbox>
     </DockPanel>
 </Window>

@@ -132,5 +132,14 @@
   <ItemGroup>
     <Folder Include="LiveCharts\" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\btn_close.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\btn_minimize.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\btn_resize.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
