@@ -18,6 +18,7 @@ namespace Stretching.App.Solving
     {
         private LineSeries mainLineSeries;
         private LineSeries otherLineSeries;
+        private ObservablePoint f02;
         private static readonly string DATA_TITLE = "Wczytane dane";
         private static readonly string DATA_TITLE_LINE = "Umowna granica plastyczności";
         private static readonly string FILE_NAME = "Wykres";
@@ -76,14 +77,15 @@ namespace Stretching.App.Solving
         private IList<ObservablePoint> GetNewPoints(IList<double> yPoints, IList<double> xPoints)
         {
             int maxNumber = (int)(0.2 * xPoints.Count);
-
             var item = Fit.Line(xPoints.Take(maxNumber).ToArray(), yPoints.Take(maxNumber).ToArray());
             double a = item.Item2;
             double b = item.Item1;
             IList<ObservablePoint> points = new List<ObservablePoint>();
+            IList<ObservablePoint> pointsData = (IList<ObservablePoint>) mainLineSeries.Values;
             double moveRight = xPoints[0] * 1.002;
             double moveLeft = xPoints[0] * 0.998;
             bool rightOverLeft = moveRight > moveLeft;
+            f02 = null;
             for (int i = 0; i < xPoints.Count; i++)
             {
                 double x = xPoints[i] * 1.002;
@@ -92,6 +94,15 @@ namespace Stretching.App.Solving
                     x = xPoints[i] * 0.998;
                 }
                 var y = (xPoints[i] * a) + (b);
+
+                var data = pointsData[i];
+                var yLow = data.Y * 0.95;
+                var yHigh = data.Y * 1.05;
+
+                if (yLow>y && y < yHigh)
+                {
+                    f02 = data;
+                }
 
                 points.Add(new ObservablePoint(x, y));
             }
@@ -111,8 +122,8 @@ namespace Stretching.App.Solving
             var dl = data.GetData().Last().GripToGrip;
             var s0 = Math.PI * Math.Pow((data.getFi() / 2.0), 2);
             var rm = fMax / s0;
-            var r02 = calculateR02(s0);
-            return new ComputedData() { DeltaL = dl, Fmax = fMax, Rm = rm, R02 = r02 };
+            var r02 = CalculateR02(s0);
+            return new ComputedData() { DeltaL = dl, Fmax = fMax, Rm = rm, R02 = r02, F02 = GetF02() };
         }
 
         /**
@@ -120,10 +131,22 @@ namespace Stretching.App.Solving
          * @param s0 - data to calculate
          * @return double - calculated R02
          */
-        private double calculateR02(double s0)
+        private double CalculateR02(double s0) => GetF02() / s0;
+
+        /**
+         * Method to Find F02
+         * @return double F02 if null returns 0
+         */
+        private double GetF02()
         {
-            //FIXME: Create algorithm to calculate F02 from two series
-            return 0;
+            if(f02 == null)
+            {
+                return 0;
+            }
+            else
+            {
+            return f02.Y;
+            }
         }
 
         /**
