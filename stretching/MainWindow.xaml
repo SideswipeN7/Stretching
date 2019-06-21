@@ -8,14 +8,14 @@
         xmlns:Wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf" x:Class="Stretching.MainWindow"
         mc:Ignorable="d"
         Icon="Resources/chart.png"
-        Title="Statyczna próba rozciągania" Height="835.229" Width="1012" MinWidth="1012" MinHeight="471.229" WindowStyle="None">
+        Title="Statyczna próba rozciągania" Height="835.229" Width="1012" MinWidth="1012" MinHeight="471.229" BorderBrush="{DynamicResource HoverBrush}" AllowsTransparency="True" WindowStyle="None">
 
-    <DockPanel x:Name="RootWindow">
-        <DockPanel x:Name="TitleBar" DockPanel.Dock="Top" Background="#FF000CFF" MouseDown="TitleBar_MouseDown" Height="26">
+    <DockPanel x:Name="RootWindow" >
+        <DockPanel x:Name="TitleBar" DockPanel.Dock="Top" Background="#FF000CFF" MouseDown="TitleBar_MouseDown" Height="26" VerticalAlignment="Top">
             <Button x:Name="CloseButton" Content=""
                     Style="{StaticResource BtnMenuBar}"
                     Click="CloseButton_Click"                 
-                    DockPanel.Dock="Right" BorderBrush="#00AE3333" Width="26" >
+                    DockPanel.Dock="Right" BorderBrush="#00AE3333" Width="18" >
                 <Button.Background>
                     <ImageBrush Stretch="Uniform" TileMode="Tile" ImageSource="Resources/btn_close.png"/>
                 </Button.Background>
@@ -23,7 +23,7 @@
             <Button x:Name="MaxButton" Content="" 
                      Style="{StaticResource BtnMenuBar}"
                     Click="MaximizeButton_Click"
-                    DockPanel.Dock="Right" BorderBrush="#00707070" Width="26" >
+                    DockPanel.Dock="Right" BorderBrush="#00707070" Width="20" >
                 <Button.Background>
                     <ImageBrush ImageSource="Resources/btn_resize.png" Stretch="Uniform"/>
                 </Button.Background>
@@ -31,13 +31,13 @@
             <Button x:Name="MinButton" Content=""
                     Style="{StaticResource BtnMenuBar}"
                     Click="MinimizeButton_Click"
-                    DockPanel.Dock="Right" BorderBrush="#00707070" Width="26" >
+                    DockPanel.Dock="Right" BorderBrush="#00707070" Width="20" >
                 <Button.Background>
                     <ImageBrush ImageSource="Resources/btn_minimize.png" Stretch="Uniform"/>
                 </Button.Background>
             </Button>
 
-            <TextBlock Text="Statyczna próba rozciągania" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock Text="Statyczna próba rozciągania" FontWeight="Bold" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0"/>
         </DockPanel>
 
         <ContentControl Content="{Binding CurrentPage}" />
